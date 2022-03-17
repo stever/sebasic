@@ -1,0 +1,430 @@
+3.1.2 - 28 MAY 2012
+* Fixed a bug in DEF FN recursive functions (thanks to Miguel Jodar).
+* New default palette (mostly using code as data to free 64 bytes for the fix).
+* Moved the UDGs next to the palette to create 22 user variables addressable
+  via the IY register.
+* Changed the COPY command to CALL.
+* ZXC3 version excludes the DEF FN fix, and moves the cursor and font
+  definitions, but is otherwise identical.
+
+
+3.1.1 - 20 MAY 2012
+* Fixed a bug where STR$ would remove the value of ATTRT. For example:
+  PRINT PAPER 5;1;STR$ 234. All available space is now used.
+* Added support for building a special version for ZXC3 cartridges for the
+  Interface II.
+* Revised version numbering to add another point. The were four builds of
+  version 3.08. These are now retrospectively labelled 3.0.8 to 3.1.1. This
+  brings OpenSE BASIC in line with GNU version numbering (major.minor.revision).
+
+3.1.0
+* Minor optimization.
+
+3.0.9
+* Applied a patch to support a commonly called routine. Should improve
+  compatibility.
+* Removed service routine at 4200. 9 bytes spare.
+
+3.0.8
+* Contents after REM no-longer tokenized. This was introduced a long time ago
+  to support HiSoft BASIC, but there is no prospect of HiSoft BASIC working
+  with OpenSE BASIC so there's really no need to tokenize after a REM.
+
+3.0.7 - 29 APR 2012
+* Fixed the bug in handling keywords beginning with IN introduced by the
+  <=/<>/>= fix.
+* INK is no longer available as an alternate command and CAT goes back to DIR.
+* COPY 4200 fills the second display file with the permanent attribute.
+
+3.0.6 - 23 APR 2012
+* Fixed the tokenizer bug: <=, <>, >= are now handled correctly.
+* EDIT with no parameters now edits the last line entered.
+
+3.0.5 - 05 APR 2012
+* Further optimization: 24 spare bytes.
+* Cursor handling modified to deal with the removal of the EDIT key.
+* Restored original palette for the time being due to anomalies with HSL
+  hardware.
+* Restored the Insert mode cursor from version 3.03.
+* Reformatted the tabs for VisualStudio/TextWrangler.
+
+3.0.4 - 14 FEB 2012
+* Minor optimization
+* New default palette for RGB or HSL modes in ULAplus
+* Changed four commands DIR > CAT, GO SUB > GOSUB, GO TO > GOTO,
+  ON ERR > ON ERROR
+* Now uses CLUT 0 on boot
+* EDIT key replaced with TAB key
+* Insert mode cursor now uses character 128
+* Cryptic credits changed
+
+3.0.3 - 29 MAY 2011
+* Fixed a bug in the DRAW command
+
+3.0.2 - 24 MAY 2011
+* Compiler changed to GNU binutils.
+* Initialization routine now puts a copy of the default palette in the
+  palette buffer.
+* ERASE command now sets the palette to the values stored in the buffer.
+* Corrected an error with the '_' glyph.
+
+3.0.1 - 13 APR 2011
+* Moved the UDGs up next to the system variables creating space for 64
+  palette bytes after the attributes for use with ULAplus screen files. 
+
+3.0.0 - 06 APR 2011
+* Switched to using OPEN81.ASM as the base assembly file.
+* Implemented the X80 math co-processor instruction set via macros.
+* A complete rewrite replacing all the encumbered code with open source
+  code or legally reverse engineered code where that was not available.
+* Functionally compatible with SE Basic 2.21.
+* New RENUM routine. It only accepts the first two parameters (start and
+  step), but it isn't broken either.
+* New tokenizer. You can now enter INK and it will automatically be
+  translated to PEN. Abbreviations for 60 commands.
+* New I-beam cursor for INSERT mode.
+
+2.2.1 - 04 DEC 2010
+* Fixed a bug where 8-bit character sets were being automatically enabled.
+* Enabled support for IM2 code that uses the first two ROM bytes as part of
+  a JP 0xAFFF instruction (used by Starstrike II).
+* There is a bug in the colour handling during editing where entering a bad
+  colour value will result in a syntax error report instead of producing
+  the error cursor. This is caused by an incorrect guard condition on a
+  jump but has no effect in runtime.
+* Deprecated Features
+ - macro support.
+ - big colourful copyright message.
+ - colour cursors.
+ - built-in 42-column mode.
+ - ANSI BASIC-78 command names. (later reinstated)
+ - page up/down.
+ - 8 extra symbol definitions.
+
+2.2.0 - 06 NOV 2010
+* Modified the GRAPHICS mode cursor.
+* Changed the location of the detokenizer flag.
+* Changed the location of the 8-bit flag.
+* Used the spare bytes to include a few initials for credits.
+
+2.1.9 - 01 NOV 2010
+* DIR command replaces CAT command.
+* Key click is off by default. POKE 23609 to enable.
+* Modified the error sound code to prevent crashes caused by the
+  detokenizer.
+* Error sound now occurs on a syntax error in direct entry.
+
+2.1.8 - 28 OCT 2010
+* Fixed ON ERR bug.
+* SAM BASIC style cursor.
+
+2.1.7 - 27 OCT 2010
+* PEN command replaces INK command.
+* Cursors no-longer FLASH. Looks better with ULAplus and saves 15 bytes.
+* Change default start colours to white on black.
+
+2.1.6 - 22 OCT 2010
+* Relocated the UDGs to the former print buffer giving an additional 168
+  bytes for BASIC programs.
+
+2.1.5
+* Syntax frozen with this release.
+* Modified the CAT command to take parameters.
+* Added the ERASE command to reset the default palette.
+* Replaced the error messages to make space for the above changes.
+
+2.1.4 - 18 OCT 2010
+* Removed the 8 extra symbol definitions.
+* Fixed the embedded control codes edit line bug.
+* Added the CAT command to switch between 7-bit and 8-bit character sets.
+* Added the MOVE command to provide BASIC access to the Z80's block copy
+  feature.
+
+2.1.3
+* Fixed the RENUM stack overflow bug (RENUM still unstable).
+
+2.1.2 - 25 MAR 2010
+* Modified fp_mod to use mem 1 instead of mem 0.
+* Changed the scroll count in ld_look_h from 3 to 255.
+* Changed the pilot signal in ld_start from 0x0415 to 0x0115.
+* Changed the maskable interrupt to avoid using IY.
+* Optimized stack_bc.
+* Changed error RASP duration.
+
+2.1.1
+* Extended SCREEN$ function to handle characters 32 to 255 (for 8-bit
+  character sets).
+
+2.1.0 - 24 MAR 2010
+* Fixed an error introduced while cleaning up the code.
+* Added support for 8-bit character sets.
+* Replaced unused bytes with RETs.
+
+2.0.9 - 23 MAR 2010
+* Fixed the PAUSE bug (thanks Woody!). The LastK flag (bit 5 of [23611]) is set
+  prior to the PAUSE, prematurely ending the pause immediately. For example, FOR
+  N = 1 TO 100 : NEXT N : PAUSE 0 (run, press a key. no pause). The ROM should
+  clear bit 5, [23611] before the first test after the HALT.
+* Moved some routines around.
+* Replaced the 8 unused bytes in the main area with RETs.
+* 9 spare continuous bytes left.
+
+2.0.8 - 21 MAR 2010
+* Fixed an error in the ON ERR handler introduced by a formatting change.
+
+2.0.7
+* Improved palette.
+* Detokenizer.
+
+2.0.6 - 17 MAR 2010
+* Still using USRA.ASM as the base assembly file.
+* Appears to be internally consistent.
+* Feature freeze until compatibility issues are resolved.
+* Built on a stripped version of the GW03 ROM (code but not the assembly
+  listing) with all the new functionality removed and just the bug-fixes
+  remaining.
+* The 'style' bugs (not corrected in GW03) were fixed.
+* Floating point and other optimisations from the SC01 ROM were applied.
+* Code was merged, one routine at a time, into the Uncommented Spectrum ROM
+  Assembly, and tested with the Interface I (this relies on many entry
+  points being maintained and is a good acid test).
+* The source was cross-compiled with Pasmo by Julian Albo and the resulting
+  code tested on Fuse (by Philip Kendall et. al.) and the ULAplus code
+  tested in SpecEmu (by Woody).
+
+2.0.5
+* Removed the last fragment of ZX Printer support.
+* RUN and STOP tokens replaced with CODE and RUN.
+* 'C' mode replaced with 'G' mode for entering reserved words.
+
+2.0.4
+* Enter octal with \.
+
+2.0.3
+* Prevented the GO TO token from displaying during LOADing and SAVEing.
+
+2.0.2
+* Used TOKENs to abbreviate error messages.
+* Restored missing palette data.
+
+2.0.1
+* Shifted the @ and © characters right by one pixel for proper display in
+  6x8 modes.
+* Fixed a error with the initialization routine-misplaced org and overrun.
+* ON ERR is now reset after an NMI or a NEW. This also fixes what looked like a
+  bug in DELETE.
+* Shrank the canned report messages by adding support for canned tokens, saving
+  26 bytes.
+* Moved two routines to make use of free space.
+* Added LOAD, CODE and RUN tokens on Q, W and E keys with symbol shift.
+* Modified the tokenizer. In 'C' mode, lower case text is not tokenized.
+  Enables use of reserved words as variable names. Variable names are case
+  insensitive and can be entered in a mixture of letters in this mode,
+  providing they contain at least one lowecase letter.
+* Restored IM2 vectors at 0x38ff, 0x39ff, 0x3aff, and 0x3bff.
+* Trimmed ON ERR code.
+* CLEAR does a RESTORE as per the manual.
+
+2.0.0 - 12 FEB 2010
+* Switched to using USRA.ASM as the base assembly file.
+* ULAplus support.
+* ON ERR commands.
+* PALETTE command.
+* Convert decimal to hex with ~.
+
+1.0.0 - 06 JAN 2006
+* Warm restart from SC01.
+* RENUM command.
+* Compiler changed to Pasmo.
+
+0.9.4 - 16 DEC 2004
+* Changed to a different base assembly file.
+* SOUND command (adapted from TS2068 ROM).
+
+0.9.3 - 22 NOV 2002
+* Shipped with vbSpec and ZX Spin.
+* DELETE command.
+* Enter hexadecimal with &.
+* Inverted line marker.
+* SYSTEM command.
+* Detokenizer removed.
+* TRUE VID and INV VID now do page up and down 10 lines.
+* CLS n sets the border and attributes.
+* extended LIST command (from IMC ROM).
+
+0.9.2
+* Experimental detokenizer.
+
+0.8.3 - 13 NOV 2002
+* Colourful copyright message.
+* Colour cursors.
+
+0.8.0 - 10 NOV 2002
+* All known bugs fixed.
+* Newton Raphson square roots.
+* Human readable assembly labels.
+* Fully relocatable source.
+* Error cursor jumps to the error.
+* NMI warm restart.
+* Increased the range of printable characters to 104.
+* Made the scroll? message sentence case.
+* Removed the COPY command.
+* Added error sound to invalid line.
+* 0x12a0 trap for ResiDOS.
+* 0x1349 entry point for IF1/ResiDOS.
+* Shortened error messages.
+* Removed redundant routines.
+* EDIT command.
+* Optimized code involving modes since modes are gone.
+* SCREEN$ handles UDGs (thanks to Hob).
+
+0.7.4
+* Moved the credits into a separate file.
+
+0.7.3
+* Optimized initialization code.
+
+0.7.2
+* Removed the redundant REC-EDIT code.
+
+0.7.1 - 23 JAN 2002
+* Fixed an error in scroll handling.
+
+0.7.0
+* Fixed an error in ED-EDIT.
+
+0.6.9 - 20 JAN 2002
+* Compiles with ZASM and TASM.
+
+0.6.8
+* First version with all functionality of 0.5.8 to compile from a single
+  source file.
+* Full support for line numbers up to 16383.
+* Bugfixes:
+  - PLOT.
+  - WAIT-KEY.
+
+0.6.7
+* Fast RAM wipe.
+* Bugfixes:
+  - EDIT.
+  - LIST.
+  - RESTORE.
+
+0.6.6
+* 16K machine test.
+* Cursor up and down in an edit line (adapted from LEC ROM).
+
+0.6.5
+* Reworked the cursor routines.
+
+0.6.4
+* Removed 'K' mode.
+* Removed the redundant key tables.
+
+0.6.3
+* Bugfixes:
+  - leading space.
+
+0.6.2
+* Reduced the number of key tables to four.
+* Used a key table for numbers and symbol.
+* Enabled STOP in INPUT using cursor down for all cases.
+* Bugfixes:
+  - -65536 (PRINT INT -65536).
+  - DEC-TO-FP.
+  - double store.
+  - MOD-DIV.
+  - PO-FETCH.
+  - RUN/GO TO/GO SUB.
+  - stack.
+
+0.6.1
+* Speeded up pilot signal sync. at 0x0571.
+* Set the scroll counter to 0xFF at 0x077A.
+* Dropped the error number from error messages.
+* Changed the RASP duration at 0x108E and 0x116C.
+* Bugfixes:
+  - CHR$ 8 (PRINT AT 0,0;CHR$ 8;"A").
+  - CHR$ 9 (PRINT "A";CHR$ 9;"B").
+  - CLEAR-PRB.
+  - colour commands.
+  - MAIN-4.
+  - PR-CC.
+  - ROM overwrite.
+  - ROM scroll.
+
+0.6.0
+* Removed the redundant ZX81-name routine.
+* Removed the call to the redundant 'CLOSE-2 subroutine' from the 'CLOSE
+  routine.'
+* ANSI BASIC-78 command names.
+* Bugfixes:
+  - NMI.
+  - CLOSE #4.
+
+0.5.9 - 02/01/2002
+* Now using an assembly file instead of patches.
+* Began converting patches to properly documented source file.
+* Changed copyright message.
+* Experimental 42 column mode.
+* Color Draw support broken.
+* LOAD, RUN, and STOP tokens replace <=, <>, and >= tokens on Q, W, and E
+  keys.
+* Inverted cursor for Timex 512x192 mode.
+* NEW command extended; 0=warm reset, 1=cold reset.
+* PAUSE defaults to PAUSE 0.
+* Bugfixes:
+  - division (IF 1/2<>0. 5 THEN PRINT "BUG").
+  - 'G' mode.
+  - 'K' mode.
+  - SCREEN$ (IF "X"=SCREEN$ (0,0) THEN PRINT "BUG").
+  - scroll? (Press TRUE VIDEO at the request).
+  - STR$ (PRINT "BUG"+STR$ 0.5).
+  - syntax check.
+
+0.5.8
+* Re-released as an IPS patch with an ultra-restrictive license.
+* Last version to be created from patches.
+
+0.5.3
+* Identified the problem with Travel With Trashman (checksums the ROM).
+
+0.5.1
+* Removed 'E' mode except for control codes.
+
+0.5.0
+* Line range extended to 16383.
+
+0.4.3 - 14 DEC 2001
+* Limited beta release.
+
+0.4.2
+* Identified the problem with Roller Coaster (spare bytes used as sprite).
+
+0.4.0
+* Removed +3DOS compatiblity.
+* Removed experimental Timex video support.
+ 
+0.3.0
+* +3DOS compatible version.
+
+0.2.2
+* Tokenizer (adapted from LEC ROM but 55 bytes shorter).
+* Experimental Timex video support.
+
+0.2.1 - 14 NOV 2001
+* Removed patch silently introduced by MacSpectacle.
+
+0.2.0
+* Returned from Australia and began to reapply bug-fixes to the original BASIC
+  ROM.
+
+0.1.0
+* Last version based on the 128 version of the BASIC ROM.
+
+0.0.1 - 05 JUL 2000
+* Realized the +4 ROM was an abomination.
+* Introduced the Geneva Mono (6x8) font.
+* Changes applied as patches; no base assembly file.
+
