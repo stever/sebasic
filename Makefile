@@ -48,8 +48,6 @@ map :
 dump: opense.coff
 	$(OBJDUMP) -s $?
 
-#.SILENT:
-
 #  These shouldn't need to be changed
 #
 #
